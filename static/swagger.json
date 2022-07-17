@@ -1,0 +1,228 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "User Management System API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "User Management API",
+      "description": "API for Manipulating User's Records in the database"
+    }
+  ],
+   "servers": [
+        {
+        "url": "/"
+        }
+    ],
+       "components": {
+        "schemas": {
+            "Add User": {
+                "type": "object",
+                "properties": {
+                    "firstname": {
+                    "type": "string"
+                    },
+                    "lastname": {
+                    "type": "string"
+                    },
+                    "email": {
+                    "type": "string"
+                    },
+                    "phone": {
+                    "type": "string"
+                    },
+                    "sex": {
+                    "type": "string"
+                    },
+                     "country": {
+                    "type": "string"
+                    }
+                }
+            },
+            "id":{
+            "type" : "integer",
+            "properties" : {
+                "name" : {
+                    "type" : "integer"
+                }
+            }
+        },"country_id":{
+            "type" : "integer",
+            "properties" : {
+                "name" : {
+                    "type" : "integer"
+                }
+            }
+        },
+            "update":{
+              "type": "object",
+              "properties" :{
+                      "firstname": {
+                    "type": "string"
+                    },
+                    "lastname": {
+                    "type": "string"
+                    },
+                    "phone": {
+                    "type": "string"
+                    },
+                    "sex": {
+                    "type": "string"
+                    },
+                    "country": {
+                    "type": "string"
+                    }
+              }
+            }
+        }
+    },
+     "paths": {
+         "/add_user": {
+             "post": {
+                 "tags": [
+                     "Add  User to API"
+                 ],
+                 "summary": "Add new user to the database",
+                 "requestBody": {
+                     "description": "Post New User To Database",
+                     "required": true,
+                     "content": {
+                         "application/json": {
+                             "schema": {
+                                 "$ref": "#/components/schemas/Add User"
+                             }
+                         }
+                     }
+                 },
+                 "responses": {
+                     "200": {
+                         "description": "OK",
+                         "schema": {
+                             "$ref": "#/components/schemas/Add User"
+                         }
+                     },
+                     "404": {
+                         "description": "NOT FOUND",
+                         "schema": {
+                             "$ref": "#/components/schemas/TodoList"
+                         }
+                     }
+                 }
+             }
+         },
+         "/all_users": {
+             "get": {
+                 "tags": [
+                     "Get Users from API"
+                 ],
+                 "summary": "Get all users with the same country_id from the API",
+                 "parameters": [
+                     {
+                         "name": "Accept",
+                         "in": "header",
+                         "description": "country id of Users to be return from the database",
+                         "required": true,
+                         "type": "integer",
+                         "schema": {
+                             "$ref": "#/components/schemas/country_id"
+                         }
+                     }
+                 ],
+                 "responses": {
+                     "200": {
+                         "description": "OK",
+                         "schema": {
+                             "$ref": "#/components/schemas/TodoList"
+                         }
+                     },
+                     "404": {
+                         "description": "NOT FOUND",
+                         "schema": {
+                             "$ref": "#/components/schemas/TodoList"
+                         }
+                     }
+                 }
+             },
+             "put": {
+                 "tags": [
+                     "Update todos on API"
+                 ],
+                 "parameters": [
+                     {
+                         "name": "id",
+                         "in": "path",
+                         "description": "todo id to update",
+                         "required": true,
+                         "type": "integer",
+                         "schema": {
+                             "$ref": "#/components/schemas/Id"
+                         }
+                     }
+                 ],
+                 "summary": "Update Todo",
+                 "requestBody": {
+                     "description": "Update Existing todo On Database",
+                     "required": true,
+                     "content": {
+                         "application/json": {
+                             "schema": {
+                                 "$ref": "#/components/schemas/update"
+                             }
+                         }
+                     }
+                 },
+                 "responses": {
+                     "200": {
+                         "description": "OK",
+                         "schema": {
+                             "$ref": "#/components/schemas/TodoList"
+                         }
+                     },
+                     "404": {
+                         "description": "NOT FOUND",
+                         "schema": {
+                             "$ref": "#/components/schemas/TodoList"
+                         }
+                     }
+                 }
+             },
+             "delete": {
+                 "tags": [
+                     "Delete todo to API"
+                 ],
+                 "parameters": [
+                     {
+                         "name": "id",
+                         "in": "path",
+                         "description": "product id to delete",
+                         "required": true,
+                         "type": "integer",
+                         "schema": {
+                             "$ref": "#/components/schemas/Id"
+                         }
+                     }
+                 ],
+                 "summary": "Delete todo",
+                 "responses": {
+                     "200": {
+                         "description": "OK",
+                         "schema": {
+                             "$ref": "#/components/schemas/TodoList"
+                         }
+                     },
+                     "404": {
+                         "description": "NOT FOUND",
+                         "schema": {
+                             "$ref": "#/components/schemas/TodoList"
+                         }
+                     }
+                 }
+             }
+         }
+     }
+}
