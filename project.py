@@ -190,6 +190,7 @@ def update_user(user_id):
     return jsonify(Response={'error': f'No user found with id {user_id}'})
 
 
+
 @app.route('/<int:user_id>/delete_user', methods=['DELETE'])
 def delete_user(user_id):
     user = Users.query.get(user_id)
