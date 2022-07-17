@@ -77,16 +77,16 @@ def home():
 # Populating the countries table
 
 
-# response = requests.get(ALL_COUNTRIES_URL)
-# data = response.json()
-# country_data = data['data']
-#
-# for country in country_data:
-#     new_country = Countries(country_code=country['code'], country_name=country['name'],
-#                             short_code=country['dial_code'])
-#     db.session.add(new_country)
-#     db.session.commit()
-# print('population completed')
+response = requests.get(ALL_COUNTRIES_URL)
+data = response.json()
+country_data = data['data']
+
+for country in country_data:
+    new_country = Countries(country_code=country['code'], country_name=country['name'],
+                            short_code=country['dial_code'])
+    db.session.add(new_country)
+    db.session.commit()
+print('population completed')
 
 
 # app routes
