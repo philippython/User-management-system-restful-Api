@@ -18,10 +18,10 @@ database_password = os.getenv('DATABASE_PASSWORD')
 database_host = os.getenv('DATABASE_HOST')
 database_name = os.getenv('DATABASE_NAME')
 
-postgresql_path = 'postgresql://{}:{}@{}/{}'.format(database_user, database_password, database_host, database_name)
+postgresql_path =os.environ.get('DATABASE_URL', 'postgresql://{}:{}@{}/{}'.format(database_user, database_password, database_host, database_name))
 app.config['SQLALCHEMY_DATABASE_URI'] = postgresql_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 SWAGGER_URL = '/swagger'
 API_URL = '/static/swagger.json'
