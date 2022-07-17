@@ -68,7 +68,7 @@ class Users(db.Model):
 
 ALL_COUNTRIES_URL = 'https://countriesnow.space/api/v0.1/countries/codes'
 
-
+db.create_all()
 @app.route('/')
 def home():
     return render_template('index.html')
