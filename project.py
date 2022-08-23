@@ -110,7 +110,7 @@ def add_user():
             db.session.add(new_user)
             db.session.commit()
             return jsonify(reponse={'msg': 'successfully added user to the database'})
-        return jsonify(reponse={'error': f'Country name => {user_country} not found'})
+        return jsonify(reponse={'error': f'Country name => {user_country} not found, Country name should be in title case e.g Nigeria'})
 
 
 
