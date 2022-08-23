@@ -99,18 +99,18 @@ def add_user():
     user = db.session.query(Users).filter_by(email=email)
     
 
-    if user:
-        return jsonify(reponse={'error': f'User with {email} already exist'})
-        
-    country = db.session.query(Countries).filter_by(country_name=user_country).first()
-    if country:
-        new_user = Users(first_name=request.form.get('firstname'), last_name=request.form.get('lastname'),
-                         email=request.form.get('email'), phone=request.form.get('phone'), sex=request.form.get('sex'),
-                         status=True, country_id=country.id)
-        db.session.add(new_user)
-        db.session.commit()
-        return jsonify(reponse={'msg': 'successfully added user to the database'})
-    return jsonify(reponse={'error': f'Country name => {country} not found'})
+    if not user:
+        country = db.session.query(Countries).filter_by(country_name=user_country).first()
+        if country:
+            new_user = Users(first_name=request.form.get('firstname'), last_name=request.form.get('lastname'),
+                            email=request.form.get('email'), phone=request.form.get('phone'), sex=request.form.get('sex'),
+                            status=True, country_id=country.id)
+            db.session.add(new_user)
+            db.session.commit()
+            return jsonify(reponse={'msg': 'successfully added user to the database'})
+        return jsonify(reponse={'error': f'Country name => {country} not found'})
+    return jsonify(reponse={'error': f'User with {email} already exist'})
+
 
 
 @app.route('/all_users')
