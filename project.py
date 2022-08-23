@@ -68,7 +68,9 @@ class Users(db.Model):
 
 ALL_COUNTRIES_URL = 'https://countriesnow.space/api/v0.1/countries/codes'
 
-db.create_all()
+# db.create_all()
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -77,16 +79,16 @@ def home():
 # Populating the countries table
 
 
-response = requests.get(ALL_COUNTRIES_URL)
-data = response.json()
-country_data = data['data']
+# response = requests.get(ALL_COUNTRIES_URL)
+# data = response.json()
+# country_data = data['data']
 
-for country in country_data:
-    new_country = Countries(country_code=country['code'], country_name=country['name'],
-                            short_code=country['dial_code'])
-    db.session.add(new_country)
-    db.session.commit()
-print('population completed')
+# for country in country_data:
+#     new_country = Countries(country_code=country['code'], country_name=country['name'],
+#                             short_code=country['dial_code'])
+#     db.session.add(new_country)
+#     db.session.commit()
+# print('population completed')
 
 
 # app routes
@@ -155,23 +157,23 @@ def all_users():
 @app.route('/<int:user_id>/user')
 def get_user(user_id):
     user = Users.query.get(user_id)
-    if user.status:
-        return jsonify(user={
-                                'country_id': user.country_id,
-                                'uuid': user.user_id,
-                                'first_name': user.first_name,
-                                'last_name': user.last_name,
-                                'id': user.id,
-                                'email': user.email,
-                                'phone': user.phone,
-                                'sex': user.sex,
-                                'status': user.status,
-                                'created_at': user.created_at,
-                                'updated_at': user.updated_at
-                              }
-                         )
-    else:
-        return jsonify(Response={'error':f'No user found with id {user_id}'})
+    if user:
+            if user.status:
+                return jsonify(user={
+                                        'country_id': user.country_id,
+                                        'uuid': user.user_id,
+                                        'first_name': user.first_name,
+                                        'last_name': user.last_name,
+                                        'id': user.id,
+                                        'email': user.email,
+                                        'phone': user.phone,
+                                        'sex': user.sex,
+                                        'status': user.status,
+                                        'created_at': user.created_at,
+                                        'updated_at': user.updated_at
+                                      }
+                                 )
+    return jsonify(Response={'error':f'No user found with id {user_id}'})
 
 
 @app.route('/<int:user_id>/update_user', methods=['PATCH'])
