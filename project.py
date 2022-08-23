@@ -96,13 +96,14 @@ def home():
 def add_user():
     user_country = request.form.get('country')
     email = request.form.get('email')
-    user = db.session.query(Users).filter_by(email=email)
-    
+    print(email)
+    user = db.session.query(Users).filter_by(email=email).first()
+    print(user)
 
     if user:
         return jsonify(reponse={'error': f'User with {email} already exist'})
     else:
-        
+
         country = db.session.query(Countries).filter_by(country_name=user_country).first()
         if country:
             new_user = Users(first_name=request.form.get('firstname'), last_name=request.form.get('lastname'),
