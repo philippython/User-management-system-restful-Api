@@ -88,13 +88,20 @@ def home():
 #                             short_code=country['dial_code'])
 #     db.session.add(new_country)
 #     db.session.commit()
-# print('population completed')
+# print('population completed')(
 
 
 # app routes
 @app.route('/add_user', methods=['POST'])
 def add_user():
     user_country = request.form.get('country')
+    email = request.form.get('email')
+    user = db.session.query(Users).filter_by(email=email)
+    
+
+    if user:
+        return jsonify(reponse={'error': f'User with {email} already exist'})
+        
     country = db.session.query(Countries).filter_by(country_name=user_country).first()
     if country:
         new_user = Users(first_name=request.form.get('firstname'), last_name=request.form.get('lastname'),
@@ -103,7 +110,7 @@ def add_user():
         db.session.add(new_user)
         db.session.commit()
         return jsonify(reponse={'msg': 'successfully added user to the database'})
-    return jsonify(reponse={'error': 'Country inputted not found'})
+    return jsonify(reponse={'error': f'Country name => {country} not found'})
 
 
 @app.route('/all_users')
