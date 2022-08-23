@@ -99,7 +99,10 @@ def add_user():
     user = db.session.query(Users).filter_by(email=email)
     
 
-    if not user:
+    if user:
+        return jsonify(reponse={'error': f'User with {email} already exist'})
+    else:
+        
         country = db.session.query(Countries).filter_by(country_name=user_country).first()
         if country:
             new_user = Users(first_name=request.form.get('firstname'), last_name=request.form.get('lastname'),
@@ -109,7 +112,6 @@ def add_user():
             db.session.commit()
             return jsonify(reponse={'msg': 'successfully added user to the database'})
         return jsonify(reponse={'error': f'Country name => {country} not found'})
-    return jsonify(reponse={'error': f'User with {email} already exist'})
 
 
 
