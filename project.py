@@ -7,7 +7,6 @@ import os
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_swagger_ui import get_swaggerui_blueprint
-import requests
 
 load_dotenv()
 
@@ -234,10 +233,46 @@ def deactivate_user(user_id):
 
 @app.route('/all_users', methods=['GET'])
 def all_users_in_db():
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 5, type=int)
+    user_list = []
+
     all_users = db.session.query(Users).all()
-    users = dict([user for user in all_users])
-    print(users)
-    return jsonify(users)
+
+    total_pages = math.ceil(len(all_users) / per_page)
+
+    for user in all_users:
+        user_list.append({
+                                    'user_info':{
+                                    'country_id': user.country_id,
+                                    'uuid': user.user_id,
+                                    'id': user.id,
+                                    'first_name':user.first_name,
+                                    'last_name':user.last_name,
+                                    'email':user.email,
+                                    'phone':user.phone,
+                                    'sex':user.sex,
+                                    'status':user.status,
+                                    'created_at':user.created_at,
+                                    'updated_at':user.updated_at
+                                    },
+                                    'record_info':{
+                                        'page': page,
+                                        'per_page': per_page,
+                                        'total_pages': total_pages,
+                                        'total_user': len(all_users)
+                                    }
+
+                    }
+            )
+
+        # pagination implementation
+        if page > 1:
+            view_page = (page - 1) * per_page
+            return jsonify(users=user_list[view_page:])
+        view_page = page * per_page
+        return jsonify(users=user_list[:view_page])
+    return jsonify(all_users)
 
 
 
@@ -245,6 +280,7 @@ def all_users_in_db():
 
 @app.route('/all_countries')
 def get_all_countries():
+
     countries = db.session.query(Countries).all()
 
     country_list = []
