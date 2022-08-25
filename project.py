@@ -235,7 +235,8 @@ def deactivate_user(user_id):
 @app.route('/all_users', methods=['GET'])
 def all_users_in_db():
     all_users = db.session.query(Users).all()
-    users = [user for user in all_users]
+    users = dict([user for user in all_users])
+    print(users)
     return jsonify(users)
 
 
