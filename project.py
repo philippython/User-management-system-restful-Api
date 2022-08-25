@@ -114,7 +114,7 @@ def add_user():
 
 
 
-@app.route('/all_users')
+@app.route('/all_users/country')
 def all_users():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 5, type=int)
@@ -231,6 +231,15 @@ def deactivate_user(user_id):
         db.session.commit()
         return jsonify(Response={'Success': 'User successfully deactivated'})
     return jsonify(Response={'error': f'No user found with id {user_id}'})
+
+@app.route('/all_users', methods=['GET'])
+def all_users_in_db():
+    all_users = db.session.query(Users).all()
+    users = [user for user in all_users]
+    return jsonify(users)
+
+
+
 
 
 @app.route('/all_countries')
