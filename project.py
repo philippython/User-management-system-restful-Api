@@ -72,7 +72,7 @@ ALL_COUNTRIES_URL = 'https://countriesnow.space/api/v0.1/countries/codes'
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return jsonify({"slackUsername": "odulaja philip", "backend": True, "age": 18, "bio": "Python engineer"})
 
 
 # Populating the countries table
