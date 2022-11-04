@@ -5,8 +5,6 @@
 #   if there are any (if there are not, an empty list shall be used as value for the specific keyword). 
 #  Anagrams already found for a specific word shall not be considered new keys in the dictionary.
 
-from tkinter import WORD
-
 
 string = "race bear thing care keen trap tweet earth knee heart neek tewt"
 
