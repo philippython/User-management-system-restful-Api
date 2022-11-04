@@ -18,20 +18,20 @@ def evaluator():
                     numbers.append(int(word))
                 except ValueError:
                     pass
-            print(numbers)
-            if "add" in operation_string: 
+            if len(numbers) < 2:
+                operand = "Invalid Operatio type"
+                return "invalid string input for operation type"
+            elif "add" in operation_string: 
                 return numbers[0] + numbers[1]
-            if "substract" in operation_string:
-                return numbers[0] + numbers[1]
-            if "multiply" in operation_string: 
-                return numbers[0] + numbers[1]
+            elif "substract" in operation_string:
+                return numbers[0] - numbers[1]
+            elif "multiply" in operation_string: 
+                return numbers[0] * numbers[1]
         if operand.lower() == "addition" : return x + y
         if operand.lower() == "substraction" : return x - y
         if operand.lower() == "multiplication" : return x * y
 
-
-    answer = ans()
-    return jsonify({"slackUsername":"OdulajaPhilip", "operation_type":operand.lower(), "result": answer})
+    return jsonify({"slackUsername":"OdulajaPhilip", "operation_type":operand.lower(), "result": ans()})
 
 
 if "__main__" == __name__:
