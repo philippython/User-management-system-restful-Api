@@ -100,9 +100,9 @@ def evaluator():
                 response.update({"operation_type": "substraction", "result":numbers[0] - numbers[1]})
             elif "multiply" in operation_string: 
                 response.update({"operation_type": "multiplication", "result":numbers[0] * numbers[1]})
-        if operand.lower() == "addition" : response.update({"operation_type": "addition", "result":numbers[0] + numbers[1]})
-        if operand.lower() == "substraction" : response.update({"operation_type": "substraction", "result":numbers[0] - numbers[1]})
-        if operand.lower() == "multiplication": response.update({"operation_type": "multiplication", "result":numbers[0] * numbers[1]})
+        if operand.lower() == "addition" : response.update({"operation_type": "addition", "result":x + y})
+        if operand.lower() == "substraction" : response.update({"operation_type": "substraction", "result":x - y})
+        if operand.lower() == "multiplication": response.update({"operation_type": "multiplication", "result":x * y})
 
     ans()
     return jsonify(response)
