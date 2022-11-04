@@ -77,7 +77,7 @@ def home():
 
 
 # zuri stage 2 challenge 
-@app.route('/evaluator', methods['POST'])
+@app.route('/evaluator', methods=['POST'])
 def evaluator():
     operand = request.args.get('operation_type')
     x = request.args.get('x')
