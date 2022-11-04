@@ -8,7 +8,7 @@ def evaluator():
     operand = request.json.get('operation_type')
     x = request.json.get('x')
     y = request.json.get('y')
-    
+    response = {"slackUsername":"OdulajaPhilip"}
     def ans():
         if len(operand) > 15: 
             operation_string = operand.split(" ")
@@ -19,19 +19,19 @@ def evaluator():
                 except ValueError:
                     pass
             if len(numbers) < 2:
-                operand = "Invalid Operatio type"
-                return "invalid string input for operation type"
+                response.update({"operation_type": operand.lower(), "result": "invalid string input for operation type"})
             elif "add" in operation_string: 
-                return numbers[0] + numbers[1]
+                response.update({"operation_type": "addition", "result":numbers[0] + numbers[1]})
             elif "substract" in operation_string:
-                return numbers[0] - numbers[1]
+                response.update({"operation_type": "substraction", "result":numbers[0] - numbers[1]})
             elif "multiply" in operation_string: 
-                return numbers[0] * numbers[1]
-        if operand.lower() == "addition" : return x + y
-        if operand.lower() == "substraction" : return x - y
-        if operand.lower() == "multiplication" : return x * y
+                response.update({"operation_type": "multiplication", "result":numbers[0] * numbers[1]})
+        if operand.lower() == "addition" : response.update({"operation_type": "addition", "result":numbers[0] + numbers[1]})
+        if operand.lower() == "substraction" : response.update({"operation_type": "substraction", "result":numbers[0] - numbers[1]})
+        if operand.lower() == "multiplication": response.update({"operation_type": "multiplication", "result":numbers[0] * numbers[1]})
 
-    return jsonify({"slackUsername":"OdulajaPhilip", "operation_type":operand.lower(), "result": ans()})
+    ans()
+    return jsonify(response)
 
 
 if "__main__" == __name__:
