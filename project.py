@@ -79,11 +79,33 @@ def home():
 # zuri stage 2 challenge 
 @app.route('/evaluator', methods=['POST'])
 def evaluator():
-    operand = request.args.get('operation_type')
-    x = request.args.get('x')
-    y = request.args.get('y')
+    operand = request.json.get('operation_type')
+    x = request.json.get('x')
+    y = request.json.get('y')
+    response = {"slackUsername":"OdulajaPhilip"}
+    def ans():
+        if len(operand) > 15: 
+            operation_string = operand.split(" ")
+            numbers = []
+            for word in operation_string:
+                try:
+                    numbers.append(int(word))
+                except ValueError:
+                    pass
+            if len(numbers) < 2:
+                response.update({"operation_type": operand.lower(), "result": "invalid string input for operation type"})
+            elif "add" in operation_string: 
+                response.update({"operation_type": "addition", "result":numbers[0] + numbers[1]})
+            elif "substract" in operation_string:
+                response.update({"operation_type": "substraction", "result":numbers[0] - numbers[1]})
+            elif "multiply" in operation_string: 
+                response.update({"operation_type": "multiplication", "result":numbers[0] * numbers[1]})
+        if operand.lower() == "addition" : response.update({"operation_type": "addition", "result":numbers[0] + numbers[1]})
+        if operand.lower() == "substraction" : response.update({"operation_type": "substraction", "result":numbers[0] - numbers[1]})
+        if operand.lower() == "multiplication": response.update({"operation_type": "multiplication", "result":numbers[0] * numbers[1]})
 
-    print(operand, x , y)
+    ans()
+    return jsonify(response)
 
 # Populating the countries table
 
