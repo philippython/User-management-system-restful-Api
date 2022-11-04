@@ -1,3 +1,4 @@
+from crypt import methods
 import datetime
 import math
 import uuid
@@ -75,6 +76,15 @@ def home():
     return jsonify({"slackUsername": "odulaja philip", "backend": True, "age": 18, "bio": "Python engineer"})
 
 
+# zuri stage 2 challenge 
+@app.route('/evaluator', methods['POST'])
+def evaluator():
+    operand = request.args.get('operation_type')
+    x = request.args.get('x')
+    y = request.args.get('y')
+
+    print(operand, x , y)
+
 # Populating the countries table
 
 
@@ -110,7 +120,6 @@ def add_user():
             db.session.commit()
             return jsonify(reponse={'msg': 'successfully added user to the database'})
         return jsonify(reponse={'error': f'Country name => {user_country} not found, Country name should be in title case e.g Nigeria'})
-
 
 
 @app.route('/all_users/country')
