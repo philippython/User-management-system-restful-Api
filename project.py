@@ -82,7 +82,7 @@ def evaluator():
     operand = request.json.get('operation_type')
     x = request.json.get('x')
     y = request.json.get('y')
-    response = {"slackUsername":"OdulajaPhilip"}
+    response = {"slackUsername":"odulaja philip"}
     def ans():
         if len(operand) > 15: 
             operation_string = operand.split(" ")
